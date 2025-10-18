@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { CopyButton } from "@/components/ui/copy-button";
 import { ImageModal } from "@/components/ui/image-modal";
 import ErrorMessage from "../components/errorMessage";
+import StatusMessage from "@/components/ui/status-message";
 
 interface ScreenshotResponse {
   error?: string;
@@ -25,6 +26,16 @@ const ScreenshotGenerator = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [deviceType, setDeviceType] = useState<'desktop' | 'mobile'>('desktop');
   const [generationTime, setGenerationTime] = useState<number | null>(null);
+  const [statusMessage, setStatusMessage] = useState<string>("");
+
+  const statusMessages = [
+    "🚀 Firing up the browser...",
+    "🌐 Visiting your website...",
+    "⏳ Waiting for page to load...",
+    "🎨 Rendering the page...",
+    "📸 Taking the perfect shot...",
+    "✨ Adding final touches..."
+  ];
 
   // Load persisted state on mount
   useEffect(() => {
@@ -77,6 +88,15 @@ const ScreenshotGenerator = () => {
     setGenerationTime(null);
     
     const startTime = Date.now();
+    let messageIndex = 0;
+
+    // Cycle through status messages
+    const messageInterval = setInterval(() => {
+      if (messageIndex < statusMessages.length) {
+        setStatusMessage(statusMessages[messageIndex]);
+        messageIndex++;
+      }
+    }, 800);
 
     try {
       const sanitizedUrl = encodeURIComponent(url);
@@ -94,10 +114,15 @@ const ScreenshotGenerator = () => {
       const endTime = Date.now();
       setGenerationTime(endTime - startTime);
       setImageSrc(imageUrl);
+      
+      clearInterval(messageInterval);
+      setStatusMessage("");
     } catch (err) {
+      clearInterval(messageInterval);
       setError(
         err instanceof Error ? err.message : "Failed to generate screenshot"
       );
+      setStatusMessage("");
     } finally {
       setLoading(false);
     }
@@ -386,6 +411,8 @@ const ScreenshotGenerator = () => {
                     )}
                   </button>
                 </motion.div>
+
+                <StatusMessage message={statusMessage} />
 
                 <AnimatePresence>
                   {error && (
