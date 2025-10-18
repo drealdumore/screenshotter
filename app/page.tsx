@@ -91,9 +91,20 @@ const ScreenshotGenerator = () => {
 
   const handleDownload = () => {
     if (!imageSrc) return;
+    
+    // Extract domain from URL for filename
+    let filename = 'screenshot';
+    try {
+      const urlObj = new URL(url);
+      const domain = urlObj.hostname.replace('www.', '');
+      filename = `${domain}-${deviceType}-screenshot`;
+    } catch {
+      filename = 'screenshot';
+    }
+    
     const link = document.createElement("a");
     link.href = imageSrc;
-    link.download = `screenshot-${Date.now()}.png`;
+    link.download = `${filename}.webp`;
     link.click();
   };
 
