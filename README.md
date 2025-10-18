@@ -1,24 +1,26 @@
 # Screenshot Generator
 
-A modern web application built with Next.js that captures high-quality screenshots of any website. Features a clean UI with dark/light theme support and optimized for both development and production environments.
+A modern web application built with Next.js that captures high-quality screenshots of any website. Features a clean UI with smooth animations, device-specific screenshots, and an engaging user experience.
 
 ## Features
 
-- 📸 **High-Quality Screenshots** - Generate WebP screenshots with customizable quality
-- 🌓 **Theme Support** - Automatic dark/light mode detection and screenshot generation
-- ⚡ **Fast Performance** - Optimized with caching and efficient rendering
-- 🎨 **Modern UI** - Built with shadcn/ui components and Tailwind CSS
-- 📱 **Responsive Design** - Works seamlessly across all devices
+- 📸 **High-Quality Screenshots** - Generate WebP screenshots with optimized quality
+- 📱 **Device Selection** - Choose between desktop and mobile viewport screenshots
+- ✨ **Animated UI** - Smooth framer-motion animations throughout the interface
+- 🎭 **Status Messages** - Friendly animated status updates during generation
+- 💾 **State Persistence** - Remembers your URL and device preferences
+- 🎨 **Custom Design** - Built with custom components and Satoshi/Bodar fonts
+- ⚡ **Fast Performance** - Optimized screenshot generation with timing display
+- 🖼️ **Image Actions** - Copy to clipboard, download with smart filenames, full-screen modal
 - 🔧 **Production Ready** - Configured for Vercel deployment with Puppeteer
 
 ## Tech Stack
 
 - **Framework**: Next.js 15.5.6 with App Router
-- **UI Components**: shadcn/ui with Radix UI primitives
-- **Styling**: Tailwind CSS v4
-- **Screenshot Engine**: Puppeteer with Chromium
+- **Animations**: Framer Motion for smooth UI transitions
+- **Styling**: Tailwind CSS v4 with custom fonts (Satoshi)
+- **Screenshot Engine**: Puppeteer with @sparticuz/chromium for production
 - **Icons**: Lucide React
-- **Theme**: next-themes
 - **Language**: TypeScript
 
 ## Getting Started
@@ -59,21 +61,24 @@ pnpm dev
 ## Usage
 
 1. Enter any valid URL (e.g., `https://example.com`)
-2. Click "Scrape" to generate a screenshot
-3. View, copy, or download the generated screenshot
-4. Generate another screenshot or modify settings as needed
+2. Select device type (Desktop or Mobile)
+3. Click "Generate" to create a screenshot
+4. Watch the friendly animated status messages
+5. View, copy, or download the generated screenshot
+6. Click "Generate Another" to create more screenshots
 
 ## API Reference
 
 ### Screenshot Endpoint
 
 ```
-GET /api/screenshot?url={url}&colorScheme={theme}
+GET /api/screenshot?url={url}&colorScheme=light&device={device}
 ```
 
 **Parameters:**
 - `url` (required): The website URL to screenshot
-- `colorScheme` (optional): `light` or `dark` theme preference
+- `colorScheme` (optional): Always set to `light`
+- `device` (optional): `desktop` or `mobile` viewport
 
 **Response:**
 - Success: WebP image binary data
@@ -112,31 +117,35 @@ For other deployment platforms, ensure:
 screenshotter/
 ├── app/
 │   ├── api/screenshot/route.ts    # Screenshot API endpoint
-│   ├── globals.css                # Global styles
-│   ├── layout.tsx                 # Root layout
+│   ├── globals.css                # Global styles with custom scrollbar
+│   ├── layout.tsx                 # Root layout with custom fonts
 │   └── page.tsx                   # Main page component
 ├── components/
-│   └── ui/                        # shadcn/ui components
-├── comps/
+│   ├── ui/
+│   │   ├── copy-button.tsx        # Animated copy button
+│   │   ├── image-modal.tsx        # Full-screen image modal
+│   │   └── status-message.tsx     # Animated status messages
 │   └── errorMessage.tsx           # Error message component
 ├── lib/
-│   └── utils.ts                   # Utility functions
-└── public/                        # Static assets
+│   ├── utils.ts                   # Utility functions
+│   └── metadata.ts                # SEO metadata configuration
+└── public/                        # Static assets and fonts
 ```
 
 ## Configuration Files
 
 - `next.config.ts` - Next.js configuration
-- `tailwind.config.js` - Tailwind CSS configuration
-- `components.json` - shadcn/ui configuration
+- `tailwind.config.js` - Tailwind CSS configuration with custom fonts
 - `tsconfig.json` - TypeScript configuration
 
 ## Performance Optimizations
 
-- **Caching**: 24-hour cache headers for generated screenshots
+- **State Persistence**: localStorage for URL and device preferences
 - **Image Format**: WebP format for optimal file size
-- **Viewport**: Optimized 1280x764 viewport with 2x scale factor
-- **Timeout Handling**: Environment-specific timeout configurations
+- **Smart Filenames**: Downloads named with domain and device type
+- **Viewport Optimization**: Desktop (1280x764) and Mobile (375x667) viewports
+- **Generation Timing**: Real-time performance feedback
+- **Custom Scrollbar**: Optimized scrolling experience
 
 ## Contributing
 
