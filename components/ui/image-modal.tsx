@@ -24,7 +24,7 @@ export function ImageModal({ src, alt, isOpen, onClose }: ImageModalProps) {
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "hidden";
     };
   }, [isOpen, onClose]);
 

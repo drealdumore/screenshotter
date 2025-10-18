@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, Download, Github, Twitter } from "lucide-react";
@@ -25,6 +25,26 @@ const ScreenshotGenerator = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [deviceType, setDeviceType] = useState<'desktop' | 'mobile'>('desktop');
   const [generationTime, setGenerationTime] = useState<number | null>(null);
+
+  // Load persisted state on mount
+  useEffect(() => {
+    const savedState = localStorage.getItem('screenshot-state');
+    if (savedState) {
+      try {
+        const { url: savedUrl, deviceType: savedDeviceType } = JSON.parse(savedState);
+        if (savedUrl) setUrl(savedUrl);
+        if (savedDeviceType) setDeviceType(savedDeviceType);
+      } catch (error) {
+        console.error('Failed to load saved state:', error);
+      }
+    }
+  }, []);
+
+  // Save state to localStorage whenever it changes
+  useEffect(() => {
+    const stateToSave = { url, deviceType };
+    localStorage.setItem('screenshot-state', JSON.stringify(stateToSave));
+  }, [url, deviceType]);
 
   const validateUrl = (url: string) => {
     try {
