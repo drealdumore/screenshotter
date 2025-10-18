@@ -32,7 +32,7 @@ A modern web application built with Next.js that captures high-quality screensho
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/drealdumore/screenshotter
 cd screenshotter
 ```
 
