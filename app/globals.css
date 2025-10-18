@@ -90,4 +90,30 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-satoshi), system-ui, sans-serif;
   }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+  
+  /* Text selection */
+  ::selection {
+    background-color: #737373;
+    color: #f1f1f1;
+  }
+  ::-moz-selection {
+    background-color: #737373;
+    color: #f1f1f1;
+  }
 }

@@ -245,6 +245,7 @@ const ScreenshotGenerator = () => {
                 />
               </motion.div>
               <motion.div
+                className="flex justify-center pt-6 pb-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.4 }}
@@ -254,7 +255,7 @@ const ScreenshotGenerator = () => {
                     setImageSrc(null);
                     setUrl("");
                   }}
-                  className="  py-2 w-full hover:scale-105 duration-200 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed h-10 rounded-md px-8 active:scale-95 bg-neutral-950 disabled:bg-neutral-950/75 text-white font-[family-name:var(--font-satoshi)]"
+                  className="hover:scale-105 duration-200 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed h-10 rounded-md px-8 active:scale-95 bg-neutral-950 disabled:bg-neutral-950/75 text-white font-[family-name:var(--font-satoshi)]"
                 >
                   Generate Another
                 </button>
