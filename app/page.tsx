@@ -104,8 +104,8 @@ const ScreenshotGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
+    <div className="min-h-screen absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
+      <header>
         <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold tracking-tight text-foreground">
@@ -212,8 +212,8 @@ const ScreenshotGenerator = () => {
               </p>
             </div>
             {/* Input Section */}
-            <div className="w-full max-w-2xl space-y-4">
-              <div className="flex gap-3">
+            <div className="w-full max-w-lg mx-auto space-y-4">
+              <div className="flex gap-3 justify-center">
                 <Input
                   type="url"
                   value={url}
@@ -221,7 +221,7 @@ const ScreenshotGenerator = () => {
                   onKeyPress={handleKeyPress}
                   placeholder="Enter website URL"
                   disabled={loading}
-                  className="flex-1 px-4 py-3 text-base"
+                  className="w-80 px-4 py-3 text-base"
                 />
                 <Button
                   onClick={handleGenerateScreenshot}
