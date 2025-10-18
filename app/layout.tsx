@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { ThemeProvider } from "next-themes";
+import { sharedMetadata } from "@/lib/metadata";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -11,8 +12,77 @@ const satoshi = localFont({
 
 
 export const metadata: Metadata = {
-  title: "Screenshot Generator",
-  description: "Capture high-quality screenshots of any website instantly",
+  metadataBase: new URL(sharedMetadata.url),
+  title: sharedMetadata.title,
+  description: sharedMetadata.description,
+  keywords: [
+    "screenshot generator",
+    "website screenshot",
+    "web capture",
+    "screenshot tool",
+    "website preview",
+    "page screenshot",
+    "online screenshot",
+    "free screenshot",
+    "website image",
+    "web scraping",
+    "puppeteer",
+    "webp screenshot",
+    "responsive screenshot",
+    "dark mode screenshot",
+    "light mode screenshot",
+  ],
+  authors: [{ name: "drealdumore", url: "https://github.com/drealdumore" }],
+  creator: "drealdumore",
+  publisher: "drealdumore",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: sharedMetadata.title,
+    description: sharedMetadata.description,
+    type: "website",
+    url: sharedMetadata.url,
+    siteName: "Screenshot Generator",
+    images: [
+      {
+        url: sharedMetadata.image,
+        width: sharedMetadata.ogImage.width,
+        height: sharedMetadata.ogImage.height,
+        type: sharedMetadata.ogImage.type,
+        alt: "Screenshot Generator - Capture Website Screenshots",
+      },
+    ],
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@drealdumore",
+    creator: "@drealdumore",
+    title: sharedMetadata.title,
+    description: sharedMetadata.description,
+    images: [sharedMetadata.image],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  
+  alternates: {
+    canonical: "/",
+  },
+  category: "technology",
 };
 
 export default function RootLayout({
@@ -21,7 +91,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${satoshi.variable} antialiased`}
       >
