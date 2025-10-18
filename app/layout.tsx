@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 
 import { sharedMetadata } from "@/lib/metadata";
+import ClientBody from "./ClientBody";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -9,7 +10,6 @@ const satoshi = localFont({
   variable: "--font-satoshi",
   display: "swap",
 });
-
 
 export const metadata: Metadata = {
   metadataBase: new URL(sharedMetadata.url),
@@ -29,7 +29,6 @@ export const metadata: Metadata = {
     "puppeteer",
     "webp screenshot",
     "responsive screenshot",
-
   ],
   authors: [{ name: "drealdumore", url: "https://github.com/drealdumore" }],
   creator: "drealdumore",
@@ -77,7 +76,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  
+
   alternates: {
     canonical: "/",
   },
@@ -90,12 +89,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${satoshi.variable} antialiased`}
-      >
-        {children}
-      </body>
+    <html lang="en" className={`${satoshi.variable} antialiased`}>
+      <ClientBody>{children}</ClientBody>
     </html>
   );
 }
