@@ -24,6 +24,7 @@ const ScreenshotGenerator = () => {
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [deviceType, setDeviceType] = useState<'desktop' | 'mobile'>('desktop');
+  const [generationTime, setGenerationTime] = useState<number | null>(null);
 
   const validateUrl = (url: string) => {
     try {
@@ -53,6 +54,9 @@ const ScreenshotGenerator = () => {
     setError(null);
     setLoading(true);
     setImageSrc(null);
+    setGenerationTime(null);
+    
+    const startTime = Date.now();
 
     try {
       const sanitizedUrl = encodeURIComponent(url);
@@ -67,6 +71,8 @@ const ScreenshotGenerator = () => {
 
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
+      const endTime = Date.now();
+      setGenerationTime(endTime - startTime);
       setImageSrc(imageUrl);
     } catch (err) {
       setError(
@@ -145,7 +151,7 @@ const ScreenshotGenerator = () => {
         </div>
       </motion.header>
 
-      <main className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-6xl px-4 py8 sm:px-6 lg:px-8">
         <AnimatePresence mode="wait">
           {imageSrc ? (
             // Screenshot preview view
@@ -163,7 +169,14 @@ const ScreenshotGenerator = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
-                <h2 className="text-2xl font-semibold ">Screenshot Preview</h2>
+                <div>
+                  <h2 className="text-2xl font-semibold ">Screenshot Preview</h2>
+                  {generationTime && (
+                    <p className="text-sm text-neutral-600 font-[family-name:var(--font-satoshi)]">
+                      Generated in {(generationTime / 1000).toFixed(2)}s
+                    </p>
+                  )}
+                </div>
                 <motion.div
                   className="flex gap-2"
                   initial={{ opacity: 0, x: 20 }}

@@ -93,13 +93,16 @@ export async function GET(req: NextRequest) {
     try {
       await Promise.race([
         page.goto(url, {
-          waitUntil: "networkidle0",
+          waitUntil: "domcontentloaded", // Faster than networkidle0
           timeout: TIMEOUT,
         }),
         new Promise((_, reject) =>
           setTimeout(() => reject(new Error("Navigation timeout")), TIMEOUT)
         ),
       ]);
+      
+      // Wait a short time for basic rendering
+      await new Promise(resolve => setTimeout(resolve, 500));
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(`Failed to load page: ${error.message}`);
@@ -109,9 +112,8 @@ export async function GET(req: NextRequest) {
 
     const screenshot = await page.screenshot({
       type: "webp",
-      quality: 80,
+      quality: 60, // Lower quality for faster generation
       fullPage: false,
-      // Removed optimizeForSpeed as it's not a valid option
     }) as Buffer;
 
     return new NextResponse(new Uint8Array(screenshot), {
