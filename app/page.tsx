@@ -113,16 +113,16 @@ const ScreenshotGenerator = () => {
       >
         <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            <motion.h1 
-              className="text-2xl font-bold tracking-tight text-foreground font-[family-name:var(--font-bodar)]"
+            <motion.h1
+              className="text-xl font-bold tracking-tight text-neutral-800"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               Screenshot Generator.
             </motion.h1>
-            <motion.div 
-              className="flex items-center gap-4"
+            <motion.div
+              className="flex items-center gap-4 text-neutral-600"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -150,7 +150,7 @@ const ScreenshotGenerator = () => {
         <AnimatePresence mode="wait">
           {imageSrc ? (
             // Screenshot preview view
-            <motion.div 
+            <motion.div
               key="preview"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -158,75 +158,75 @@ const ScreenshotGenerator = () => {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="space-y-6"
             >
-            <motion.div 
-              className="flex items-center justify-between"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-            >
-              <h2 className="text-2xl font-semibold text-foreground font-[family-name:var(--font-bodar)]">
-                Screenshot Preview
-              </h2>
-              <motion.div 
-                className="flex gap-2"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: 0.2 }}
+              <motion.div
+                className="flex items-center justify-between"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
               >
-                <CopyButton
-                  content=""
-                  onCopy={handleCopy}
-                  variant="outline"
-                  size="sm"
-                  className="bg-transparent"
+                <h2 className="text-2xl font-semibold ">
+                  Screenshot Preview
+                </h2>
+                <motion.div
+                  className="flex gap-2"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                >
+                  <CopyButton
+                    content=""
+                    onCopy={handleCopy}
+                    variant="outline"
+                    size="sm"
+                    className="bg-transparent"
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleDownload}
+                    className="gap-2 bg-transparent"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download
+                  </Button>
+                </motion.div>
+              </motion.div>
+              <motion.div
+                className="overflow-hidden rounded-lg border border-border bg-muted cursor-pointer"
+                onClick={() => setIsModalOpen(true)}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <img
+                  src={imageSrc || "/placeholder.svg"}
+                  alt="Website screenshot"
+                  className="w-full transition-transform duration-300"
+                  onError={() => setError("Failed to load screenshot")}
                 />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.4 }}
+              >
                 <Button
                   variant="outline"
-                  size="sm"
-                  onClick={handleDownload}
-                  className="gap-2 bg-transparent"
+                  onClick={() => {
+                    setImageSrc(null);
+                    setUrl("");
+                  }}
+                  className="w-full hover:scale-105 transition-transform duration-200 font-[family-name:var(--font-satoshi)]"
                 >
-                  <Download className="h-4 w-4" />
-                  Download
+                  Generate Another
                 </Button>
               </motion.div>
             </motion.div>
-            <motion.div
-              className="overflow-hidden rounded-lg border border-border bg-muted cursor-pointer"
-              onClick={() => setIsModalOpen(true)}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <img
-                src={imageSrc || "/placeholder.svg"}
-                alt="Website screenshot"
-                className="w-full transition-transform duration-300"
-                onError={() => setError("Failed to load screenshot")}
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
-            >
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setImageSrc(null);
-                  setUrl("");
-                }}
-                className="w-full hover:scale-105 transition-transform duration-200 font-[family-name:var(--font-satoshi)]"
-              >
-                Generate Another
-              </Button>
-            </motion.div>
-          </motion.div>
           ) : (
             // Hero section with form
-            <motion.div 
+            <motion.div
               key="hero"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -235,7 +235,7 @@ const ScreenshotGenerator = () => {
               className="flex flex-col items-center justify-center space-y-8 py-12"
             >
               {/* Badge */}
-              <motion.div 
+              <motion.div
                 className="flex"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -257,21 +257,21 @@ const ScreenshotGenerator = () => {
               </motion.div>
 
               {/* Hero Title */}
-              <motion.div 
+              <motion.div
                 className="space-y-4 text-center"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <motion.h2 
-                  className="text-5xl font-bold tracking-tight text-foreground sm:text-6xl font-[family-name:var(--font-bodar)]"
+                <motion.h2
+                  className="text-5xl font-bold tracking-tight text-black sm:text-6xl "
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
                   Screenshot Generator.
                 </motion.h2>
-                <motion.p 
+                <motion.p
                   className="mx-auto max-w-2xl text-lg text-muted-foreground font-[family-name:var(--font-satoshi)]"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -282,26 +282,26 @@ const ScreenshotGenerator = () => {
                 </motion.p>
               </motion.div>
               {/* Input Section */}
-              <motion.div 
+              <motion.div
                 className="w-full max-w-lg mx-auto space-y-4"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
-                <motion.div 
+                <motion.div
                   className="flex gap-3 justify-center"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.7 }}
                 >
-                  <Input
+                  <input
                     type="url"
                     value={url}
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
                     placeholder="Enter website URL"
                     disabled={loading}
-                    className="w-80 px-4 py-3 text-base transition-all duration-200 focus:scale-105 font-[family-name:var(--font-satoshi)]"
+                    className=" h-9 min-w-0 rounded-md bg-transparent shadow-xs outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] w-80 px-4 py-3 text-base transition-all duration-200 focus:scale-105 font-[family-name:var(--font-satoshi)] border-neutral-600 border"
                   />
                   <Button
                     onClick={handleGenerateScreenshot}
@@ -327,8 +327,11 @@ const ScreenshotGenerator = () => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.95 }}
                       transition={{ duration: 0.3 }}
+                      className="flex justify-center"
                     >
-                      <ErrorMessage message={error} />
+                      <div className="max-w-md">
+                        <ErrorMessage message={error} />
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>

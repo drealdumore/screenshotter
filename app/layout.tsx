@@ -9,11 +9,6 @@ const satoshi = localFont({
   display: "swap",
 });
 
-const bodar = localFont({
-  src: "../public/bodar.otf",
-  variable: "--font-bodar",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Screenshot Generator",
@@ -28,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${satoshi.variable} ${bodar.variable} font-sans antialiased`}
+        className={`${satoshi.variable} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
