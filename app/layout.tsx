@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { ThemeProvider } from "next-themes";
+
 import { sharedMetadata } from "@/lib/metadata";
 import "./globals.css";
 
@@ -29,8 +29,7 @@ export const metadata: Metadata = {
     "puppeteer",
     "webp screenshot",
     "responsive screenshot",
-    "dark mode screenshot",
-    "light mode screenshot",
+
   ],
   authors: [{ name: "drealdumore", url: "https://github.com/drealdumore" }],
   creator: "drealdumore",
@@ -91,13 +90,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
         className={`${satoshi.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );

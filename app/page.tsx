@@ -3,10 +3,10 @@
 import type React from "react";
 
 import { useState } from "react";
-import { useTheme } from "next-themes";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, Download, Github, Twitter } from "lucide-react";
-import { Button } from "@/components/ui/button";
+// Removed shadcn Button - using custom buttons
 import { Input } from "@/components/ui/input";
 import { CopyButton } from "@/components/ui/copy-button";
 import { ImageModal } from "@/components/ui/image-modal";
@@ -17,7 +17,7 @@ interface ScreenshotResponse {
 }
 
 const ScreenshotGenerator = () => {
-  const { resolvedTheme } = useTheme();
+
   const [url, setUrl] = useState<string>("");
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -55,9 +55,7 @@ const ScreenshotGenerator = () => {
 
     try {
       const sanitizedUrl = encodeURIComponent(url);
-      const apiUrl = `/api/screenshot?url=${sanitizedUrl}&colorScheme=${
-        resolvedTheme === "dark" ? "dark" : "light"
-      }`;
+      const apiUrl = `/api/screenshot?url=${sanitizedUrl}&colorScheme=light`;
 
       const response = await fetch(apiUrl);
 
@@ -164,9 +162,7 @@ const ScreenshotGenerator = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
-                <h2 className="text-2xl font-semibold ">
-                  Screenshot Preview
-                </h2>
+                <h2 className="text-2xl font-semibold ">Screenshot Preview</h2>
                 <motion.div
                   className="flex gap-2"
                   initial={{ opacity: 0, x: 20 }}
@@ -176,19 +172,15 @@ const ScreenshotGenerator = () => {
                   <CopyButton
                     content=""
                     onCopy={handleCopy}
-                    variant="outline"
-                    size="sm"
                     className="bg-transparent"
                   />
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <button
                     onClick={handleDownload}
-                    className="gap-2 bg-transparent"
+                    className="font-[family-name:var(--font-satoshi)] inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 border shadow-xs hover:bg-accent hover:text-accent-foreground  h-8 rounded-md px-3 border-neutral-400  gap-2 bg-transparent"
                   >
                     <Download className="h-4 w-4" />
                     Download
-                  </Button>
+                  </button>
                 </motion.div>
               </motion.div>
               <motion.div
@@ -212,16 +204,15 @@ const ScreenshotGenerator = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.4 }}
               >
-                <Button
-                  variant="outline"
+                <button
                   onClick={() => {
                     setImageSrc(null);
                     setUrl("");
                   }}
-                  className="w-full hover:scale-105 transition-transform duration-200 font-[family-name:var(--font-satoshi)]"
+                  className="  py-2 w-full hover:scale-105 duration-200 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed h-10 rounded-md px-8 active:scale-95 bg-neutral-950 disabled:bg-neutral-950/75 text-white font-[family-name:var(--font-satoshi)]"
                 >
                   Generate Another
-                </Button>
+                </button>
               </motion.div>
             </motion.div>
           ) : (
@@ -248,8 +239,8 @@ const ScreenshotGenerator = () => {
                   href="https://github.com/Drealdumore/MetaScraper"
                 >
                   <span className="relative inline-block overflow-hidden rounded-full p-[1px] hover:scale-105 transition-transform duration-200">
-                    <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#a9a9a9_0%,#0c0c0c_50%,#a9a9a9_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#171717_0%,#737373_50%,#171717_100%)]"></span>
-                    <div className="inline-flex h-full w-full cursor-pointer font-semibold justify-center rounded-full bg-white px-3 py-1 text-xs leading-5 text-neutral-600 backdrop-blur-xl dark:bg-black dark:text-neutral-200 font-[family-name:var(--font-satoshi)]">
+                    <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#a9a9a9_0%,#0c0c0c_50%,#a9a9a9_100%)]"></span>
+                    <div className="inline-flex h-full w-full cursor-pointer font-semibold justify-center rounded-full bg-white px-3 py-1 text-xs leading-5 text-neutral-600 backdrop-blur-xl font-[family-name:var(--font-satoshi)]">
                       Proudly Open Source ⚡️
                     </div>
                   </span>
@@ -303,11 +294,10 @@ const ScreenshotGenerator = () => {
                     disabled={loading}
                     className=" h-9 min-w-0 rounded-md bg-transparent shadow-xs outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] w-80 px-4 py-3 text-base transition-all duration-200 focus:scale-105 font-[family-name:var(--font-satoshi)] border-neutral-600 border"
                   />
-                  <Button
+                  <button
                     onClick={handleGenerateScreenshot}
                     disabled={loading}
-                    size="lg"
-                    className="transition-all duration-200 active:scale-95 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed rounded-md bg-neutral-950 disabled:bg-neutral-950/75 px-5 py-2 text-white font-[family-name:var(--font-satoshi)]"
+                    className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed h-10 rounded-md px-8 active:scale-95 hover:scale-105 duration-200 bg-neutral-950 disabled:bg-neutral-950/75 text-white font-[family-name:var(--font-satoshi)]"
                   >
                     {loading ? (
                       <>
@@ -317,7 +307,7 @@ const ScreenshotGenerator = () => {
                     ) : (
                       "Scrape"
                     )}
-                  </Button>
+                  </button>
                 </motion.div>
 
                 <AnimatePresence>
