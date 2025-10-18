@@ -4,10 +4,12 @@ import type React from "react";
 
 import { useState } from "react";
 import { useTheme } from "next-themes";
-import { Loader2, Copy, Download, Github, Twitter } from "lucide-react";
+import { Loader2, Download, Github, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import ErrorMessage from "../comps/errorMessage";
+import { CopyButton } from "@/components/ui/copy-button";
+import { ImageModal } from "@/components/ui/image-modal";
+import ErrorMessage from "../components/errorMessage";
 
 interface ScreenshotResponse {
   error?: string;
@@ -19,6 +21,7 @@ const ScreenshotGenerator = () => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const validateUrl = (url: string) => {
     try {
@@ -93,7 +96,7 @@ const ScreenshotGenerator = () => {
     try {
       const blob = await fetch(imageSrc).then((r) => r.blob());
       await navigator.clipboard.write([
-        new ClipboardItem({ "image/png": blob }),
+        new ClipboardItem({ "image/webp": blob }),
       ]);
     } catch (err) {
       setError("Failed to copy image to clipboard");
@@ -137,15 +140,13 @@ const ScreenshotGenerator = () => {
                 Screenshot Preview
               </h2>
               <div className="flex gap-2">
-                <Button
+                <CopyButton
+                  content=""
+                  onCopy={handleCopy}
                   variant="outline"
                   size="sm"
-                  onClick={handleCopy}
-                  className="gap-2 bg-transparent"
-                >
-                  <Copy className="h-4 w-4" />
-                  Copy
-                </Button>
+                  className="bg-transparent"
+                />
                 <Button
                   variant="outline"
                   size="sm"
@@ -157,11 +158,14 @@ const ScreenshotGenerator = () => {
                 </Button>
               </div>
             </div>
-            <div className="overflow-hidden rounded-lg border border-border bg-muted">
+            <div
+              className="overflow-hidden rounded-lg border border-border bg-muted cursor-pointer"
+              onClick={() => setIsModalOpen(true)}
+            >
               <img
                 src={imageSrc || "/placeholder.svg"}
                 alt="Website screenshot"
-                className="w-full"
+                className="w-full hover:scale-105 transition-transform duration-300"
                 onError={() => setError("Failed to load screenshot")}
               />
             </div>
@@ -241,6 +245,15 @@ const ScreenshotGenerator = () => {
           </div>
         )}
       </main>
+
+      {imageSrc && (
+        <ImageModal
+          src={imageSrc}
+          alt="Website screenshot"
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
