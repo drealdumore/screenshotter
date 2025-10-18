@@ -23,6 +23,7 @@ const ScreenshotGenerator = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [deviceType, setDeviceType] = useState<'desktop' | 'mobile'>('desktop');
 
   const validateUrl = (url: string) => {
     try {
@@ -55,7 +56,7 @@ const ScreenshotGenerator = () => {
 
     try {
       const sanitizedUrl = encodeURIComponent(url);
-      const apiUrl = `/api/screenshot?url=${sanitizedUrl}&colorScheme=light`;
+      const apiUrl = `/api/screenshot?url=${sanitizedUrl}&colorScheme=light&device=${deviceType}`;
 
       const response = await fetch(apiUrl);
 
@@ -279,6 +280,37 @@ const ScreenshotGenerator = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
+                {/* Device Type Selector */}
+                <motion.div
+                  className="flex justify-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.65 }}
+                >
+                  <div className="flex bg-neutral-100 rounded-lg p-1 font-[family-name:var(--font-satoshi)]">
+                    <button
+                      onClick={() => setDeviceType("desktop")}
+                      className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                        deviceType === "desktop"
+                          ? "bg-white text-neutral-900 shadow-sm border-neutral-200 border"
+                          : "text-neutral-600 hover:text-neutral-900"
+                      }`}
+                    >
+                      Desktop
+                    </button>
+                    <button
+                      onClick={() => setDeviceType("mobile")}
+                      className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                        deviceType === "mobile"
+                          ? "bg-white text-neutral-900 shadow-sm"
+                          : "text-neutral-600 hover:text-neutral-900"
+                      }`}
+                    >
+                      Mobile
+                    </button>
+                  </div>
+                </motion.div>
+
                 <motion.div
                   className="flex gap-3 justify-center"
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -305,7 +337,7 @@ const ScreenshotGenerator = () => {
                         Generating...
                       </>
                     ) : (
-                      "Scrape"
+                      "Generate"
                     )}
                   </button>
                 </motion.div>

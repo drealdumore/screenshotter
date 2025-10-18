@@ -15,10 +15,21 @@ if (isDev) {
 
 export const runtime = "nodejs";
 
-const VIEWPORT = {
-  width: 1280,
-  height: 764,
-  deviceScaleFactor: 2,
+const getViewport = (device: string) => {
+  if (device === 'mobile') {
+    return {
+      width: 375,
+      height: 812,
+      deviceScaleFactor: 2,
+      isMobile: true,
+      hasTouch: true,
+    };
+  }
+  return {
+    width: 1280,
+    height: 764,
+    deviceScaleFactor: 2,
+  };
 };
 
 const TIMEOUT = process.env.VERCEL ? 8000 : 10000; // Shorter timeout for Vercel
@@ -27,6 +38,7 @@ const CACHE_DURATION = 60 * 60 * 24;
 export async function GET(req: NextRequest) {
   const url = req.nextUrl.searchParams.get("url");
   const colorScheme = req.nextUrl.searchParams.get("colorScheme") || "light";
+  const device = req.nextUrl.searchParams.get("device") || "desktop";
 
   if (!url) {
     return NextResponse.json(
@@ -65,12 +77,18 @@ export async function GET(req: NextRequest) {
 
     const page = await browser.newPage();
 
+    const viewport = getViewport(device);
+    
     await Promise.all([
-      page.setViewport(VIEWPORT),
+      page.setViewport(viewport),
       page.emulateMediaFeatures([
         { name: "prefers-color-scheme", value: colorScheme },
       ]),
     ]);
+    
+    if (device === 'mobile') {
+      await page.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1');
+    }
 
     try {
       await Promise.race([
