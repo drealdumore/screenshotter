@@ -166,7 +166,7 @@ const ScreenshotGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen overflow-auto absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] font-[family-name:var(--font-satoshi)]">
+    <div className="min-h-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] font-[family-name:var(--font-satoshi)]">
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
