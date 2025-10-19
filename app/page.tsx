@@ -16,28 +16,26 @@ interface ScreenshotResponse {
 }
 
 const ScreenshotGenerator = () => {
-
   const [url, setUrl] = useState<string>("");
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [deviceType, setDeviceType] = useState<'desktop' | 'mobile'>('desktop');
+  const [deviceType, setDeviceType] = useState<"desktop" | "mobile">("desktop");
   const [generationTime, setGenerationTime] = useState<number | null>(null);
   const [statusMessage, setStatusMessage] = useState<string>("");
 
-
-
   // Load persisted state on mount
   useEffect(() => {
-    const savedState = localStorage.getItem('screenshot-state');
+    const savedState = localStorage.getItem("screenshot-state");
     if (savedState) {
       try {
-        const { url: savedUrl, deviceType: savedDeviceType } = JSON.parse(savedState);
+        const { url: savedUrl, deviceType: savedDeviceType } =
+          JSON.parse(savedState);
         if (savedUrl) setUrl(savedUrl);
         if (savedDeviceType) setDeviceType(savedDeviceType);
       } catch (error) {
-        console.error('Failed to load saved state:', error);
+        console.error("Failed to load saved state:", error);
       }
     }
   }, []);
@@ -45,7 +43,7 @@ const ScreenshotGenerator = () => {
   // Save state to localStorage whenever it changes
   useEffect(() => {
     const stateToSave = { url, deviceType };
-    localStorage.setItem('screenshot-state', JSON.stringify(stateToSave));
+    localStorage.setItem("screenshot-state", JSON.stringify(stateToSave));
   }, [url, deviceType]);
 
   const validateUrl = (url: string) => {
@@ -77,22 +75,22 @@ const ScreenshotGenerator = () => {
     setLoading(true);
     setImageSrc(null);
     setGenerationTime(null);
-    
+
     const startTime = Date.now();
-    
+
     try {
       const sanitizedUrl = encodeURIComponent(url);
       const apiUrl = `/api/screenshot-stream?url=${sanitizedUrl}&colorScheme=light&device=${deviceType}`;
 
       const eventSource = new EventSource(apiUrl);
-      
+
       eventSource.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        
+
         if (data.status) {
           setStatusMessage(data.status);
         }
-        
+
         if (data.success) {
           const endTime = Date.now();
           setGenerationTime(endTime - startTime);
@@ -101,7 +99,7 @@ const ScreenshotGenerator = () => {
           setLoading(false);
           eventSource.close();
         }
-        
+
         if (data.error) {
           setError(data.error);
           setStatusMessage("");
@@ -109,14 +107,13 @@ const ScreenshotGenerator = () => {
           eventSource.close();
         }
       };
-      
+
       eventSource.onerror = () => {
         setError("Connection failed. Please try again.");
         setStatusMessage("");
         setLoading(false);
         eventSource.close();
       };
-      
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to generate screenshot"
@@ -134,17 +131,17 @@ const ScreenshotGenerator = () => {
 
   const handleDownload = () => {
     if (!imageSrc) return;
-    
+
     // Extract domain from URL for filename
-    let filename = 'screenshot';
+    let filename = "screenshot";
     try {
       const urlObj = new URL(url);
-      const domain = urlObj.hostname.replace('www.', '');
+      const domain = urlObj.hostname.replace("www.", "");
       filename = `${domain}-${deviceType}-screenshot`;
     } catch {
-      filename = 'screenshot';
+      filename = "screenshot";
     }
-    
+
     const link = document.createElement("a");
     link.href = imageSrc;
     link.download = `${filename}.webp`;
@@ -224,7 +221,9 @@ const ScreenshotGenerator = () => {
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
                 <div>
-                  <h2 className="text-2xl font-semibold ">Screenshot Preview</h2>
+                  <h2 className="text-2xl font-semibold ">
+                    Screenshot Preview
+                  </h2>
                   {generationTime && (
                     <p className="text-sm text-neutral-600 font-[family-name:var(--font-satoshi)]">
                       Generated in {(generationTime / 1000).toFixed(2)}s

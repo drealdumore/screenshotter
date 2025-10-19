@@ -1,18 +1,19 @@
 # Screenshot Generator
 
-A modern web application built with Next.js that captures high-quality screenshots of any website. Features a clean UI with smooth animations, device-specific screenshots, and an engaging user experience.
+A modern web application built with Next.js that captures high-quality screenshots of any website. Features a clean UI with smooth animations, device-specific screenshots, real-time status updates, and an engaging user experience.
 
 ## Features
 
 - 📸 **High-Quality Screenshots** - Generate WebP screenshots with optimized quality
 - 📱 **Device Selection** - Choose between desktop and mobile viewport screenshots
 - ✨ **Animated UI** - Smooth framer-motion animations throughout the interface
-- 🎭 **Status Messages** - Friendly animated status updates during generation
+- 🔄 **Real-Time Status Updates** - Live progress updates streamed from API during generation
 - 💾 **State Persistence** - Remembers your URL and device preferences
-- 🎨 **Custom Design** - Built with custom components and Satoshi/Bodar fonts
+- 🎨 **Custom Design** - Built with custom components and Satoshi fonts
 - ⚡ **Fast Performance** - Optimized screenshot generation with timing display
 - 🖼️ **Image Actions** - Copy to clipboard, download with smart filenames, full-screen modal
 - 🔧 **Production Ready** - Configured for Vercel deployment with Puppeteer
+- 🌊 **Smooth Scrolling** - Enhanced scrolling experience with Lenis
 
 ## Tech Stack
 
@@ -84,6 +85,20 @@ GET /api/screenshot?url={url}&colorScheme=light&device={device}
 - Success: WebP image binary data
 - Error: JSON with error message
 
+### Streaming Screenshot Endpoint
+
+```
+GET /api/screenshot-stream?url={url}&colorScheme=light&device={device}
+```
+
+**Parameters:**
+- Same as above
+
+**Response:**
+- Server-Sent Events (SSE) stream with real-time status updates
+- Final event contains base64-encoded WebP image
+- Graceful handling of slow-loading pages
+
 ## Environment Configuration
 
 The application automatically detects the environment:
@@ -116,7 +131,10 @@ For other deployment platforms, ensure:
 ```
 screenshotter/
 ├── app/
-│   ├── api/screenshot/route.ts    # Screenshot API endpoint
+│   ├── api/
+│   │   ├── screenshot/route.ts         # Original screenshot API endpoint
+│   │   └── screenshot-stream/route.ts  # Streaming screenshot API with SSE
+│   ├── ClientBody.tsx             # Client wrapper for smooth scrolling
 │   ├── globals.css                # Global styles with custom scrollbar
 │   ├── layout.tsx                 # Root layout with custom fonts
 │   └── page.tsx                   # Main page component
@@ -143,9 +161,11 @@ screenshotter/
 - **State Persistence**: localStorage for URL and device preferences
 - **Image Format**: WebP format for optimal file size
 - **Smart Filenames**: Downloads named with domain and device type
-- **Viewport Optimization**: Desktop (1280x764) and Mobile (375x667) viewports
+- **Viewport Optimization**: Desktop (1280x764) and Mobile (375x812) viewports
 - **Generation Timing**: Real-time performance feedback
-- **Custom Scrollbar**: Optimized scrolling experience
+- **Smooth Scrolling**: Lenis integration for enhanced UX
+- **Streaming Updates**: Server-Sent Events for real-time progress
+- **Graceful Timeouts**: Continues screenshot capture even with slow page loads
 
 ## Contributing
 
