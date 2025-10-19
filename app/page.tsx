@@ -166,7 +166,7 @@ const ScreenshotGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] font-[family-name:var(--font-satoshi)]">
+    <div className="min-h-screen overflow-auto absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] font-[family-name:var(--font-satoshi)]">
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -207,7 +207,7 @@ const ScreenshotGenerator = () => {
         </div>
       </motion.header>
 
-      <main className="mx-auto max-w-6xl px-4 py8 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         <AnimatePresence mode="wait">
           {imageSrc ? (
             // Screenshot preview view
@@ -306,8 +306,8 @@ const ScreenshotGenerator = () => {
                 <a
                   target="_blank"
                   className="inline-flex"
-                  aria-label="Visit the GitHub repository for MetaScraper"
-                  href="https://github.com/Drealdumore/MetaScraper"
+                  aria-label="Visit the GitHub repository for Screenshot Generator"
+                  href="https://github.com/drealdumore/screenshotter"
                 >
                   <span className="relative inline-block overflow-hidden rounded-full p-[1px] hover:scale-105 transition-transform duration-200">
                     <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#a9a9a9_0%,#0c0c0c_50%,#a9a9a9_100%)]"></span>

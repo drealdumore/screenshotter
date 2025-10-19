@@ -34,7 +34,7 @@ A modern web application built with Next.js that captures high-quality screensho
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/drealdumore/screenshotter
+git clone https://github.com/drealdumore/screenshotter.git
 cd screenshotter
 ```
 
@@ -60,7 +60,7 @@ pnpm dev
 
 ## Usage
 
-1. Enter any valid URL (e.g., `https://example.com`)
+1. Enter any valid URL (e.g., `https://drealdumore.vercel.app`)
 2. Select device type (Desktop or Mobile)
 3. Click "Generate" to create a screenshot
 4. Watch the friendly animated status messages
