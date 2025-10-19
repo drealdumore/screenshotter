@@ -6,8 +6,6 @@ import { useState, useEffect } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, Download, Github, Twitter } from "lucide-react";
-// Removed shadcn Button - using custom buttons
-import { Input } from "@/components/ui/input";
 import { CopyButton } from "@/components/ui/copy-button";
 import { ImageModal } from "@/components/ui/image-modal";
 import ErrorMessage from "../components/errorMessage";
@@ -28,14 +26,7 @@ const ScreenshotGenerator = () => {
   const [generationTime, setGenerationTime] = useState<number | null>(null);
   const [statusMessage, setStatusMessage] = useState<string>("");
 
-  const statusMessages = [
-    "🚀 Firing up the browser...",
-    "🌐 Visiting your website...",
-    "⏳ Waiting for page to load...",
-    "🎨 Rendering the page...",
-    "📸 Taking the perfect shot...",
-    "✨ Adding final touches..."
-  ];
+
 
   // Load persisted state on mount
   useEffect(() => {
@@ -88,42 +79,49 @@ const ScreenshotGenerator = () => {
     setGenerationTime(null);
     
     const startTime = Date.now();
-    let messageIndex = 0;
-
-    // Cycle through status messages
-    const messageInterval = setInterval(() => {
-      if (messageIndex < statusMessages.length) {
-        setStatusMessage(statusMessages[messageIndex]);
-        messageIndex++;
-      }
-    }, 800);
-
+    
     try {
       const sanitizedUrl = encodeURIComponent(url);
-      const apiUrl = `/api/screenshot?url=${sanitizedUrl}&colorScheme=light&device=${deviceType}`;
+      const apiUrl = `/api/screenshot-stream?url=${sanitizedUrl}&colorScheme=light&device=${deviceType}`;
 
-      const response = await fetch(apiUrl);
-
-      if (!response.ok) {
-        const data: ScreenshotResponse = await response.json();
-        throw new Error(data.error || "Failed to generate screenshot");
-      }
-
-      const blob = await response.blob();
-      const imageUrl = URL.createObjectURL(blob);
-      const endTime = Date.now();
-      setGenerationTime(endTime - startTime);
-      setImageSrc(imageUrl);
+      const eventSource = new EventSource(apiUrl);
       
-      clearInterval(messageInterval);
-      setStatusMessage("");
+      eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        
+        if (data.status) {
+          setStatusMessage(data.status);
+        }
+        
+        if (data.success) {
+          const endTime = Date.now();
+          setGenerationTime(endTime - startTime);
+          setImageSrc(data.image);
+          setStatusMessage("");
+          setLoading(false);
+          eventSource.close();
+        }
+        
+        if (data.error) {
+          setError(data.error);
+          setStatusMessage("");
+          setLoading(false);
+          eventSource.close();
+        }
+      };
+      
+      eventSource.onerror = () => {
+        setError("Connection failed. Please try again.");
+        setStatusMessage("");
+        setLoading(false);
+        eventSource.close();
+      };
+      
     } catch (err) {
-      clearInterval(messageInterval);
       setError(
         err instanceof Error ? err.message : "Failed to generate screenshot"
       );
       setStatusMessage("");
-    } finally {
       setLoading(false);
     }
   };
