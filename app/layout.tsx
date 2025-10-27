@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: sharedMetadata.title,
   description: sharedMetadata.description,
   keywords: [
-    "screenshot generator",
+    "Peekr",
     "website screenshot",
     "web capture",
     "screenshot tool",
@@ -43,14 +43,14 @@ export const metadata: Metadata = {
     description: sharedMetadata.description,
     type: "website",
     url: sharedMetadata.url,
-    siteName: "Screenshot Generator",
+    siteName: "Peekr — Instantly Capture and Preview Websites",
     images: [
       {
         url: sharedMetadata.image,
         width: sharedMetadata.ogImage.width,
         height: sharedMetadata.ogImage.height,
         type: sharedMetadata.ogImage.type,
-        alt: "Screenshot Generator - Capture Website Screenshots",
+        alt: "Peekr — Instantly Capture and Preview Websites",
       },
     ],
     locale: "en_US",

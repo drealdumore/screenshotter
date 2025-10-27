@@ -175,7 +175,7 @@ const ScreenshotGenerator = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Screenshot Generator.
+              Peekr.
             </motion.h1>
             <motion.div
               className="flex items-center gap-4 text-neutral-600"
@@ -303,8 +303,8 @@ const ScreenshotGenerator = () => {
                 <a
                   target="_blank"
                   className="inline-flex"
-                  aria-label="Visit the GitHub repository for Screenshot Generator"
-                  href="https://github.com/drealdumore/screenshotter"
+                  aria-label="Visit the GitHub repository for Peekr"
+                  href="https://github.com/drealdumore/Peekr"
                 >
                   <span className="relative inline-block overflow-hidden rounded-full p-[1px] hover:scale-105 transition-transform duration-200">
                     <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#a9a9a9_0%,#0c0c0c_50%,#a9a9a9_100%)]"></span>
@@ -328,7 +328,7 @@ const ScreenshotGenerator = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
-                  Screenshot Generator.
+                  Peekr.
                 </motion.h2>
                 <motion.p
                   className="mx-auto max-w-2xl text-lg text-muted-foreground font-[family-name:var(--font-satoshi)]"
@@ -336,8 +336,10 @@ const ScreenshotGenerator = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
                 >
-                  Easily capture and retrieve screenshots from any website,
-                  including full page renders and responsive designs.
+                  Capture and preview websites instantly — from full-page
+                  screenshots to responsive snapshots. Perfect for developers,
+                  designers, and marketers who want clean visuals of any
+                  webpage.
                 </motion.p>
               </motion.div>
               {/* Input Section */}

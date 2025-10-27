@@ -1,4 +1,4 @@
-# Screenshot Generator
+# Peekr
 
 A modern web application built with Next.js that captures high-quality screenshots of any website. Features a clean UI with smooth animations, device-specific screenshots, real-time status updates, and an engaging user experience.
 
@@ -35,8 +35,8 @@ A modern web application built with Next.js that captures high-quality screensho
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/drealdumore/screenshotter.git
-cd screenshotter
+git clone https://github.com/drealdumore/peekr.git
+cd peekr
 ```
 
 2. Install dependencies:
